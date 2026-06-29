@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextLevel - Онлайн курстар платформасы</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #fff;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+            min-height: 100vh;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(0, 0, 0, 0.9);
+            border-bottom: 2px solid rgba(168, 85, 247, 0.3);
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #06b6d4, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu button {
+            background: none;
+            border: none;
+            color: #d1d5db;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-menu button:hover,
+        .nav-menu button.active {
+            color: #06b6d4;
+            border-bottom-color: #06b6d4;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            padding: 5rem 0;
+        }
+
+        .hero-text h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #06b6d4, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: #d1d5db;
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: linear-gradient(135deg, #06b6d4, #a855f7);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(6, 182, 212, 0.5);
+        }
+
+        .hero-emoji {
+            font-size: 8rem;
+            text-align: center;
+        }
+
+        .features {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-card {
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            color: #06b6d4;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            color: #9ca3af;
+        }
+
+        .media-section {
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .media-section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #06b6d4;
+        }
+
+        audio {
+            width: 100%;
+            margin: 1rem 0;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 8px;
+        }
+
+        video, iframe {
+            width: 100%;
+            height: 400px;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: block;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .course-card {
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .course-card:hover {
+            border-color: #06b6d4;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .course-image {
+            font-size: 4rem;
+            text-align: center;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .course-content {
+            padding: 1.5rem;
+        }
+
+        .course-category {
+            color: #06b6d4;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .course-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .course-card p {
+            color: #9ca3af;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .course-card button {
+            width: 100%;
+            background: linear-gradient(135deg, #06b6d4, #a855f7);
+            border: none;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .course-card button:hover {
+            transform: scale(1.02);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .stat-card {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: #06b6d4;
+        }
+
+        .stat-emoji {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            color: #06b6d4;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #9ca3af;
+        }
+
+        .toc {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .toc h3 {
+            color: #06b6d4;
+            margin-bottom: 1.5rem;
+        }
+
+        .toc ul {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            list-style: none;
+        }
+
+        .toc li {
+            color: #d1d5db;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 0.5rem;
+        }
+
+        .toc li:hover {
+            color: #06b6d4;
+            transform: translateX(5px);
+        }
+
+        .form-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+
+        .form-box {
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .form-box h2 {
+            color: #06b6d4;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: #d1d5db;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 6px;
+            padding: 0.75rem;
+            color: white;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #06b6d4;
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.2);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .form-submit {
+            width: 100%;
+            background: linear-gradient(135deg, #06b6d4, #a855f7);
+            border: none;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+        }
+
+        .success-message {
+            background: rgba(34, 197, 94, 0.2);
+            border: 1px solid rgb(34, 197, 94);
+            color: #86efac;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-item {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .contact-item:hover {
+            border-color: #06b6d4;
+        }
+
+        .contact-item h3 {
+            color: #06b6d4;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-item p {
+            color: #d1d5db;
+        }
+
+        .contact-item a {
+            color: #06b6d4;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .contact-item a:hover {
+            color: #22d3ee;
+        }
+
+        .timeline {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 3rem 0;
+        }
+
+        .timeline h3 {
+            color: #06b6d4;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+        }
+
+        .timeline-item:last-child {
+            border-bottom: none;
+        }
+
+        .timeline-year {
+            color: #06b6d4;
+            font-weight: bold;
+            min-width: 80px;
+        }
+
+        .timeline-event {
+            color: #d1d5db;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .team-card {
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .team-card:hover {
+            border-color: #06b6d4;
+            transform: translateY(-5px);
+        }
+
+        .team-emoji {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .team-card h3 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-card p {
+            color: #06b6d4;
+        }
+
+        footer {
+            border-top: 1px solid rgba(168, 85, 247, 0.3);
+            background: rgba(0, 0, 0, 0.5);
+            margin-top: 5rem;
+            padding: 3rem 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: #06b6d4;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #06b6d4;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(168, 85, 247, 0.2);
+            padding-top: 2rem;
+            text-align: center;
+            color: #9ca3af;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+
+        .about-text h2 {
+            color: #06b6d4;
+            margin-bottom: 1rem;
+        }
+
+        .about-text p {
+            color: #d1d5db;
+            margin-bottom: 1rem;
+        }
+
+        .values-box {
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .values-box h3 {
+            color: rgba(168, 85, 247, 0.8);
+            margin-bottom: 1.5rem;
+        }
+
+        .values-box div {
+            margin-bottom: 1rem;
+            color: #d1d5db;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding: 3rem 0;
+            }
+
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+
+            .hero-emoji {
+                font-size: 5rem;
+            }
+
+            .nav-menu {
+                gap: 1rem;
+            }
+
+            .nav-menu button {
+                padding: 0.3rem 0.5rem;
+                font-size: 14px;
+            }
+
+            .form-container {
+                grid-template-columns: 1fr;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .courses-grid {
+                grid-template-columns: 1fr;
+            }
+
+            video, iframe {
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">NextLevel</div>
+            <ul class="nav-menu" id="navMenu">
+                <li><button class="nav-btn active" onclick="showPage('home')">Басты</button></li>
+                <li><button class="nav-btn" onclick="showPage('courses')">Курстар</button></li>
+                <li><button class="nav-btn" onclick="showPage('about')">Туралы</button></li>
+                <li><button class="nav-btn" onclick="showPage('contact')">Контактіс</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="home" class="page active">
+        <div class="container">
+            <section class="hero">
+                <div class="hero-text">
+                    <h1>Өзіңді Өнегендіңіз!</h1>
+                    <p>NextLevel — бағдарламалау, дизайн, тіл және бизнес бойынша онлайн курстарының ең жақсы платформасы. Сертификат алыңыз, дағдыларын ынамдарын өсіріңіз!</p>
+                    <button class="btn-primary" onclick="showPage('courses')">Курстарды қарау</button>
+                </div>
+                <div class="hero-emoji">🚀</div>
+            </section>
+
+            <section class="features">
+                <h2 class="section-title">Ерекше мүмкіндіктер</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📹</div>
+                        <h3>Сапалы бейнесабақтар</h3>
+                        <p>Тәжірібелі сурашылардан тәліми және түсіндіруі.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">✅</div>
+                        <h3>Интерактивті тестілер</h3>
+                        <p>Өз білімді тексеріп, жетімдіктерін орындап ал.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🏆</div>
+                        <h3>Сертификаттар</h3>
+                        <p>Курсты аяқтағаннан кейін ынамды сертификат.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌍</div>
+                        <h3>Түрлі бағыттар</h3>
+                        <p>100+ құрылымды курстар барлық деңгейде.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎓</div>
+                        <h3>Өндіктемелі ынамдар</h3>
+                        <p>Сынақ аралығындағы ынамды қолдау.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💻</div>
+                        <h3>Толық интерфейс</h3>
+                        <p>Қосымшасынан веб-ге дейін барлық платформа.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="media-section">
+                <h2>NextLevel туралы ойлар</h2>
+                <p>Платформамыз туралы қысқа өндіктеме тыңдаңыз:</p>
+                <audio controls>
+                    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                </audio>
+            </section>
+
+            <section class="media-section">
+                <h2>▶ Танымалды курс фрагменті</h2>
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </section>
+
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-emoji">👨‍🎓</div>
+                    <div class="stat-number">50,000+</div>
+                    <div class="stat-label">Оқушы</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-emoji">📚</div>
+                    <div class="stat-number">100+</div>
+                    <div class="stat-label">Курстар</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-emoji">🏆</div>
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Ынамдылық</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-emoji">⭐</div>
+                    <div class="stat-number">4.9/5</div>
+                    <div class="stat-label">Рейтинг</div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div id="courses" class="page">
+        <div class="container">
+            <h1 style="margin-top: 3rem; font-size: 2.5rem;">Барлық курстар</h1>
+            <p style="color: #d1d5db; font-size: 1.2rem; margin-bottom: 2rem;">Өзіңе ұнайтын бағытты таңдап, үйреніп бастау</p>
+
+            <div class="toc">
+                <h3>Бет мәзірі:</h3>
+                <ul>
+                    <li onclick="scrollToCategory('programming')">→ Бағдарламалау курстары</li>
+                    <li onclick="scrollToCategory('design')">→ Дизайн курстары</li>
+                    <li onclick="scrollToCategory('languages')">→ Тілдер курстары</li>
+                    <li onclick="scrollToCategory('business')">→ Бизнес курстары</li>
+                </ul>
+            </div>
+
+            <h2 id="programming" style="color: #06b6d4; margin-top: 3rem; margin-bottom: 1.5rem; font-size: 1.8rem;">Бағдарламалау</h2>
+            <div class="courses-grid">
+                <div class="course-card">
+                    <div class="course-image">🖥️</div>
+                    <div class="course-content">
+                        <div class="course-category">Бағдарламалау</div>
+                        <h3>Веб-бағдарламалау (JavaScript)</h3>
+                        <p>HTML, CSS, JavaScript негіздерінен іс жүргіме дейін</p>
+                        <button>Төлемі - 15,000 ₸</button>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-image">⚛️</div>
+                    <div class="course-content">
+                        <div class="course-category">Бағдарламалау</div>
+                        <h3>React масштабты аяқтау</h3>
+                        <p>React.js фреймворкінің барлық құрылымдары</p>
+                        <button>Төлемі - 18,000 ₸</button>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-image">🐍</div>
+                    <div class="course-content">
+                        <div class="course-category">Бағдарламалау</div>
+                        <h3>Python үйрену</h3>
+                        <p>Python-дың барлық негіздері және құрамдары</p>
+                        <button>Төлемі - 16,000 ₸</button>
+                    </div>
+                </div>
+            </div>
+
+            <h2 id="design" style="color: #06b6d4; margin-top: 3rem; margin-bottom: 1.5rem; font-size: 1.8rem;">Дизайн</h2>
+            <div class="courses-grid">
+                <div class="course-card">
+                    <div class="course-image">🎨</div>
+                    <div class="course-content">
+                        <div class="course-category">Дизайн</div>
+                        <h3>UI/UX Дизайны</h3>
+                        <p>Figma және дизайн принциптерінің толық бағалығы</p>
+                        <button>Төлемі - 17,000 ₸</button>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-image">🖼️</div>
+                    <div class="course-content">
+                        <div class="course-category">Дизайн</div>
+                        <h3>Графикалық дизайны</h3>
+                        <p>Adobe Creative Suite-пен интенсивті жұмыс</p>
+                        <button>Төлемі - 16,500 ₸</button>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-image">✨</div>
+                    <div class="course-content">
+                        <div class="course-category">Дизайн</div>
+                        <h3>Веб-дизайны</h3>
+                        <p>Сайт дизайны принциптері және құрамдары</p>
+                        <button>Төлемі - 15,500 ₸</button>
+                    </div>
+                </div>
+            </div>
+
+            <h2 id="languages" style="color: #06b6d4; margin-top: 3rem; margin-bottom: 1.5rem; font-size: 1.8rem;">Тілдер</h2>
+            <div class="courses-grid">
+                <div class="course-card">
+                    <div class="course-image">📚</div>
+                    <div class="course-content">
+                        <div class="course-category">Тілдер</div>
+                        <h3>Қазақ тілі (Орфография)</h3>
+                        <p>Қазақ тілінің орфографиялық ережелері</p>
+                        <button>Төлемі - 8,000 ₸</button>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-image">🌍</div>
+                    <div class="course-content">
+                        <div class="course-category">Тілдер</div>
+                        <h3>English Speaking Club</h3>
+                        <p>Ағылшын тілінде сөйлеу дағдысы</p>
+                        <button>Төлемі - 12,000 ₸</button>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-image">🇷🇺</div>
+                    <div class="course-content">
+                        <div class="course-category">Тілдер</div>
+                        <h3>Орыс тілі (Advanced)</h3>
+                        <p>Орыс тілінің ынамды дағдыларын өнегеу</p>
+                        <button>Төлемі - 10,000 ₸</button>
+                    </div>
+                </div>
+            </div>
+
+            <h2 id="business" style="color: #06b6d4; margin-top: 3rem; margin-bottom: 1.5rem; font-size: 1.8rem;">Бизнес</h2>
+            <div class="courses-grid">
+                <div class="course-card">
+                    <div class="course-image">💼</div>
+                    <div class="course-content">
+                        <div class="course-category">Бизнес</div>
+                        <h3>Бизнес негіздері</h3>
+                        <p>Стартапты бастау және өсіру стратегиялары</p>
+                        <button>Төлемі - 14,000 ₸</button>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-image">📊</div>
+                    <div class="course-content">
+                        <div class="course-category">Бизнес</div>
+                        <h3>Цифрлық маркетинг</h3>
+                        <p>SEO, SMM, қоспалы маркетинг стратегиялары</p>
+                        <button>Төлемі - 13,000 ₸</button>
+                    </div>
+                </div>
+                <div class="course-card">
+                    <div class="course-image">💡</div>
+                    <div class="course-content">
+                        <div class="course-category">Бизнес</div>
+                        <h3>Предпринимательство</h3>
+                        <p>Өзіңдік іс құрау өндіктемелері мен кеңестері</p>
+                        <button>Төлемі - 15,000 ₸</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="about" class="page">
+        <div class="container">
+            <h1 style="margin-top: 3rem; font-size: 2.5rem;">NextLevel туралы</h1>
+
+            <div class="about-grid">
+                <div class="about-text">
+                    <h2>Біз кімбіз?</h2>
+                    <p>NextLevel — 2020 жылы құрылған онлайн білім беру платформасы. Біздің миссиясы — барлық адамға сапалы білім беруге қол жеткізу.</p>
+                    <p>Біз 50 000-ден астам оқушыны ынамдық және сертификат алуға тәрбиелендік. Платформамыз қазақстандық және халықаралық сурашылар құрады.</p>
+                    <p>Біз өндіктеме берген: бағдарламалау, дизайн, тіл, бизнес және басқалары бойынша 100+ курс.</p>
+                </div>
+                <div class="values-box">
+                    <h3>Құндылығымыз</h3>
+                    <div>✨ Сапа - Үздік материалдар</div>
+                    <div>🎯 Ынамдылық - Сертификаттар</div>
+                    <div>🌍 Қол жеткізу - Барлығына</div>
+                    <div>💡 Инновация - Жаңа технологиялар</div>
+                    <div>👥 Қоршау - Қажет болғанда</div>
+                </div>
+            </div>
+
+            <h2 style="color: #06b6d4; margin-top: 3rem; margin-bottom: 1.5rem; font-size: 1.8rem;">Манасамыз</h2>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-emoji">👨‍💼</div>
+                    <h3>Нұрсұлтан Жамалхан</h3>
+                    <p>Негіздеуші, CEO</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-emoji">👩‍💻</div>
+                    <h3>Айгүл Сәтбаева</h3>
+                    <p>Техникалық директор</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-emoji">👨‍🏫</div>
+                    <h3>Болат Мәтеков</h3>
+                    <p>Контент директор</p>
+                </div>
+            </div>
+
+            <div class="timeline">
+                <h3>Біздің істөрі</h3>
+                <div class="timeline-item">
+                    <div class="timeline-year">2020</div>
+                    <div class="timeline-event">NextLevel құрылды</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2021</div>
+                    <div class="timeline-event">10,000 оқушыға жетті</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2022</div>
+                    <div class="timeline-event">50 курстағы ынамды</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2023</div>
+                    <div class="timeline-event">Халықаралық сарттарға қол жеткізу</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2024</div>
+                    <div class="timeline-event">100,000+ ынамдар</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="contact" class="page">
+        <div class="container">
+            <h1 style="margin-top: 3rem; font-size: 2.5rem;">Біз бәйе іс күндеуіп отырмыз</h1>
+            <p style="color: #d1d5db; font-size: 1.2rem; margin-bottom: 3rem;">Сұрақ, ынамдар немесе ынамдарың болса, бізге хабарла</p>
+
+            <div class="form-container">
+                <div class="form-box">
+                    <h2>Кері байланыс</h2>
+                    <div class="success-message" id="successMessage">
+                        ✓ Сайлав! Болды - 24 сағатта қарап шығамыз
+                    </div>
+                    <form onsubmit="handleSubmit(event)">
+                        <div class="form-group">
+                            <label>Атыңыз</label>
+                            <input type="text" name="name" required placeholder="Өз атыңыз жаз">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" name="email" required placeholder="email@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label>Хабарлама</label>
+                            <textarea name="message" required placeholder="Өз ойыңды жаз..."></textarea>
+                        </div>
+                        <button type="submit" class="form-submit">📤 Жөнелтіңіз</button>
+                    </form>
+                </div>
+
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <h3>📞 Телефон</h3>
+                        <p>+7 (707) 123-45-67</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>✉️ Email</h3>
+                        <p><a href="mailto:hello@nextlevel.kz">hello@nextlevel.kz</a></p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>📍 Орын</h3>
+                        <p>Алматы қ., Бәйтарық 133<br>Қазақстан</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>🌐 Сілтемелер</h3>
+                        <p>
+                            <a href="#">📘 Facebook</a><br>
+                            <a href="#">📷 Instagram</a><br>
+                            <a href="#">💼 LinkedIn</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h4>NextLevel</h4>
+                    <p>Өндіктеме және сертификат беретін ең жақсы платформа</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Курстар</h4>
+                    <ul>
+                        <li><a href="#">Бағдарламалау</a></li>
+                        <li><a href="#">Дизайн</a></li>
+                        <li><a href="#">Тілдер</a></li>
+                        <li><a href="#">Бизнес</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Компания</h4>
+                    <ul>
+                        <li><a href="#">Туралы</a></li>
+                        <li><a href="#">Жұмыс</a></li>
+                        <li><a href="#">Құрылымдар</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Құқықтар</h4>
+                    <ul>
+                        <li><a href="#">Ішінге түйіні</a></li>
+                        <li><a href="#">Айталмалауы</a></li>
+                        <li><a href="#">Құқық</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 NextLevel. Барлық құқықтары сақталған. | Қазақстан 🇰🇿</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function showPage(pageName) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            document.getElementById(pageName).classList.add('active');
+            
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            window.scrollTo(0, 0);
+        }
+
+        function scrollToCategory(categoryId) {
+            const element = document.getElementById(categoryId);
+            if (element) {
+                showPage('courses');
+                setTimeout(() => {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            }
+        }
+
+        function handleSubmit(e) {
+            e.preventDefault();
+            const successMsg = document.getElementById('successMessage');
+            successMsg.classList.add('show');
+            e.target.reset();
+            setTimeout(() => {
+                successMsg.classList.remove('show');
+            }, 3000);
+        }
+
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
